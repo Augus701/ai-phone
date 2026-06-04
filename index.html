@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>AI Call</title>
-</head>
+<button onclick="startCall()">📞</button>
 
-<body style="background:black;color:white;display:flex;justify-content:center;align-items:center;height:100vh;">
+<script type="module">
+import Retell from "https://cdn.jsdelivr.net/npm/retell-client-js-sdk/+esm";
 
-<h1>AI Call</h1>
+const client = new Retell();
 
-<button onclick="alert('下一步我们接入AI电话')" style="
-width:120px;height:120px;border-radius:60px;font-size:30px;">
-📞
-</button>
+window.startCall = async function () {
+  const res = await fetch("/api/call");
+  const data = await res.json();
 
-</body>
-</html>
+  await client.startCall({
+    accessToken: data.access_token
+  });
+};
+</script>
