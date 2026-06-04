@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     const response = await fetch("https://api.retellai.com/create-web-call", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer agent_e2dfe17e28b46166ea55f071f5",
+        "Authorization": "Bearer key_52dbeff1e5132ef0b9559041560a",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -11,9 +11,15 @@ export default async function handler(req, res) {
       })
     });
 
-    const data = await response.json();
+    const text = await response.text();
 
-    res.status(200).json(data);
+    console.log("Retell原始返回：", text);
+
+    res.status(200).json({
+      status: response.status,
+      raw: text
+    });
+
   } catch (error) {
     res.status(500).json({
       error: error.message
