@@ -33,81 +33,22 @@ cursor:pointer;
 <script>
 document.getElementById("callBtn").onclick = async function () {
   const status = document.getElementById("status");
+
   status.innerText = "请求中...";
 
   try {
     const res = await fetch("/api/call");
     const data = await res.json();
 
-    console.log("API返回：", data);
+    console.log("后端返回：", data);
 
-    if (!data || data.error) {
+    if (!res.ok || data.error) {
       status.innerText = "后端错误";
       return;
     }
 
-    status.innerText = "已连接（但还没接入语音SDK）";
+    status.innerText = "后端正常（下一步接入AI通话）";
 
-    alert("后端通了，但还没接入通话SDK");
-  } catch (e) {
-    console.error(e);
-    status.innerText = "网络错误";
-  }
-};
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>AI Phone</title>
-</head>
-
-<body style="
-background:black;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-flex-direction:column;
-font-family:sans-serif;
-">
-
-<h1>AI Phone</h1>
-
-<button id="callBtn" style="
-width:120px;
-height:120px;
-border-radius:60px;
-font-size:30px;
-cursor:pointer;
-">
-📞
-</button>
-
-<p id="status">待机中</p>
-
-<script>
-document.getElementById("callBtn").onclick = async function () {
-  const status = document.getElementById("status");
-  status.innerText = "请求中...";
-
-  try {
-    const res = await fetch("/api/call");
-    const data = await res.json();
-
-    console.log("API返回：", data);
-
-    if (!data || data.error) {
-      status.innerText = "后端错误";
-      return;
-    }
-
-    status.innerText = "已连接（但还没接入语音SDK）";
-
-    alert("后端通了，但还没接入通话SDK");
   } catch (e) {
     console.error(e);
     status.innerText = "网络错误";
